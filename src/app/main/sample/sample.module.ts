@@ -9,7 +9,7 @@ import { AuthenGuardService } from 'app/authentication/authen-guard.service';
 
 const routes = [
     {
-        path     : 'sample',
+        path     : '**',
         component: SampleComponent,
         // canActivate: [AuthenGuardService]
     }

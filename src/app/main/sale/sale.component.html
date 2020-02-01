@@ -1,0 +1,27 @@
+<div class="page-layout blank p-24" fusePerfectScrollbar>
+    <div class="fuse-card" fxFlex="100" *ngIf="summary.length > 0 else noData">
+        <table class="simple clickable">
+            <thead>
+              <tr>
+                <th></th>
+                <th class="text-right">Qty</th>
+                <th class="text-right">Amount</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let row of summary">
+                <td>{{ row.itemName }}</td>
+                <td class="text-right">{{ row.itemQty }}</td>
+                <td class="text-right">{{ row.itemSubtotal }}</td>
+              </tr>
+            </tbody>
+          </table>
+    </div>
+</div>
+<ng-template #noData>
+  <div   class="fuse-card simple clickable" fxLayout="column" fxLayoutAlign="center center" fxFlex="100" (drop)="drop($event)" (dragover)="allowDrop($event)">
+    <mat-icon class="clickable" fxLayout="column" fxFlex="40" fxLayoutAlign="start center">backup</mat-icon>
+    <p  fxLayoutAlign="start center">คุณสามารถลากและปล่อยไฟล์ Excel ในนี้เพื่ออัพโหลด</p>
+    <p  fxLayoutAlign="start center">หรือ คลิ๊กเพื่อเลือกไฟล์ Excel จากไดเรกทอรีของท่าน</p>
+  </div>
+</ng-template>

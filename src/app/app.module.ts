@@ -16,7 +16,7 @@ import { fuseConfig } from 'app/fuse-config';
 
 import { AppComponent } from 'app/app.component';
 import { LayoutModule } from 'app/layout/layout.module';
-import { SampleModule } from 'app/main/sample/sample.module';
+import { DashoardModule } from './main/dashoard/dashoard.module';
 
 const appRoutes: Routes = [
     {
@@ -24,8 +24,16 @@ const appRoutes: Routes = [
         loadChildren: './authentication/authentication.module#AuthenticationModule'
     },
     {
+        path        : 'sample',
+        loadChildren: './main/sample/sample.module#SampleModule'
+    },
+    {
+        path        : 'sale',
+        loadChildren: './main/sale/sale.module#SaleModule'
+    },
+    {
         path      : '**',
-        redirectTo: 'sample'
+        redirectTo: 'dashboard'
     }
 ];
 
@@ -57,7 +65,7 @@ const appRoutes: Routes = [
 
         // App modules
         LayoutModule,
-        SampleModule
+        DashoardModule
     ],
     bootstrap   : [
         AppComponent
