@@ -1,27 +1,82 @@
 <div class="page-layout blank p-24" fusePerfectScrollbar>
-    <div class="fuse-card" fxFlex="100" *ngIf="summary.length > 0 else noData">
-        <table class="simple clickable">
-            <thead>
-              <tr>
-                <th></th>
-                <th class="text-right">Qty</th>
-                <th class="text-right">Amount</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let row of summary">
-                <td>{{ row.itemName }}</td>
-                <td class="text-right">{{ row.itemQty }}</td>
-                <td class="text-right">{{ row.itemSubtotal }}</td>
-              </tr>
-            </tbody>
-          </table>
+  <div fxLayout="row" fxFlex="100" *ngIf="summary.length > 0; else noData">
+    <div class="widget" fxFlex="100" fxFlex.gt-sm="60">
+      <div class="fuse-card">
+        <div class="light-blue-600">
+            <div class="p-16" fxLayout="row" fxLayoutAlign="space-between center">
+                <div class="pr-16">
+                    <div class="h1 font-weight-300">Sales</div>
+                    <div class="h5 secondary-text">Lifetime sum of your sales</div>
+                </div>
+
+                
+            </div>
+
+            <div class="p-16 pt-8" fxLayout="row" fxLayoutAlign="space-between end">
+                <div class="font-size-48 font-weight-300 line-height-1">2222</div>
+                <div fxLayout="row" fxLayoutAlign="start center">
+                    <mat-icon >trending_up</mat-icon>
+                    
+                    <div class="ml-8">10000
+                        (20%)
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+       
+
     </div>
+    </div>
+    <div
+      class="widget"
+      fxFlex="100"
+      fxFlex.gt-sm="40"
+      fxLayoutAlign="end center"
+    >
+      <div class="fuse-card" fxFlex="100">
+        <table class="simple clickable">
+          <thead>
+            <tr>
+              <th></th>
+              <th class="text-right">Qty</th>
+              <th class="text-right">Amount</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let row of summary">
+              <td>{{ row.itemName }}</td>
+              <td class="text-right">{{ row.itemQty | number}}</td>
+              <td class="text-right">{{ row.itemSubtotal | number}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
 </div>
 <ng-template #noData>
-  <div   class="fuse-card simple clickable" fxLayout="column" fxLayoutAlign="center center" fxFlex="100" (drop)="drop($event)" (dragover)="allowDrop($event)">
-    <mat-icon class="clickable" fxLayout="column" fxFlex="40" fxLayoutAlign="start center">backup</mat-icon>
-    <p  fxLayoutAlign="start center">คุณสามารถลากและปล่อยไฟล์ Excel ในนี้เพื่ออัพโหลด</p>
-    <p  fxLayoutAlign="start center">หรือ คลิ๊กเพื่อเลือกไฟล์ Excel จากไดเรกทอรีของท่าน</p>
+  <div
+    class="fuse-card simple clickable"
+    fxLayout="column"
+    fxLayoutAlign="center center"
+    fxFlex="100"
+    (drop)="drop($event)"
+    (dragover)="allowDrop($event)"
+  >
+    <mat-icon
+      class="clickable"
+      fxLayout="column"
+      fxFlex="40"
+      fxLayoutAlign="start center"
+      >backup</mat-icon
+    >
+    <p fxLayoutAlign="start center">
+      คุณสามารถลากและปล่อยไฟล์ Excel ในนี้เพื่ออัพโหลด
+    </p>
+    <p fxLayoutAlign="start center">
+      หรือ คลิ๊กเพื่อเลือกไฟล์ Excel จากไดเรกทอรีของท่าน
+    </p>
   </div>
 </ng-template>

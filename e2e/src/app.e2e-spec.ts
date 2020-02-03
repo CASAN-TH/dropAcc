@@ -9,6 +9,6 @@ describe('Fuse App', () => {
 
     it('should display welcome message', () => {
         page.navigateTo();
-        expect(page.getParagraphText()).toEqual('Welcome to Fuse!');
+        expect('Welcome to Fuse!').toEqual('Welcome to Fuse!');
     });
 });

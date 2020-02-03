@@ -4,7 +4,7 @@ import { RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { FuseSharedModule } from '@fuse/shared.module';
 import { AuthenGuardService } from 'app/authentication/authen-guard.service';
-import { MatIconModule } from '@angular/material';
+import { MatIconModule, MatMenuModule } from '@angular/material';
 
 const routes = [
   {
@@ -22,6 +22,7 @@ const routes = [
     TranslateModule,
 
     MatIconModule,
+    MatMenuModule,
 
     FuseSharedModule
   ],
