@@ -6,7 +6,7 @@ export const environment = {
     production: false,
     hmr       : false,
     appName : 'dropAcc-dev',
-    apiUrl : 'http://'
+    apiUrl : 'http://localhost:3000'
 };
 
 /*

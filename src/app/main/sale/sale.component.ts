@@ -11,7 +11,8 @@ import { SaleService } from "./sale.service";
   styleUrls: ["./sale.component.scss"]
 })
 export class SaleComponent implements OnInit {
-  fileType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+  fileType =
+    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
   records: any = [];
   summary: any = [];
   constructor(
@@ -30,18 +31,30 @@ export class SaleComponent implements OnInit {
 
     if (this.isValidCSVFile(files[0])) {
       this.saleService.csvReader(files[0]).then((data: any) => {
+        // console.log(data);
         this.records = data;
         this.summary = this.summaryData(data);
+        this.importData(data);
       });
-    } else if(this.isValidXLSXFile(files[0])) {
+    } else if (this.isValidXLSXFile(files[0])) {
       this.saleService.xlsxReader(files[0]).then((data: any) => {
-        console.log(data);
+        // console.log(data);
         this.records = data;
         this.summary = this.summaryData(data);
-      })
-    }else {
+        this.importData(data);
+      });
+    } else {
       alert("Please import valid .csv file.");
       this.fileReset();
+    }
+  }
+
+  importData(data){
+    while (data.length) {
+      const payLoad = data.splice(0, 100);
+      this.saleService.importData(payLoad).then((res: any) => {
+        console.log(res);
+      });
     }
   }
 
