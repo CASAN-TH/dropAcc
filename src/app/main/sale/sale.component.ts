@@ -25,11 +25,19 @@ export class SaleComponent implements OnInit {
 
   ngOnInit(): void {}
 
+  detectFiles(ev) {
+    const files = ev.target.files;
+    console.log(files);
+    this.validateFile(files);
+  }
   drop(ev) {
     ev.preventDefault();
     const files = ev.dataTransfer.files;
     console.log(files);
+    this.validateFile(files);
+  }
 
+  validateFile(files){
     if (this.isValidCSVFile(files[0])) {
       this.saleService.csvReader(files[0]).then((data: any) => {
         // console.log(data);

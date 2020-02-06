@@ -5,35 +5,39 @@
         <div class="light-blue-600">
           <div class="p-16" fxLayout="row" fxLayoutAlign="space-between center">
             <div class="pr-16">
-              <div class="h1 font-weight-300">{{fileDescription.sourceType}}</div>
-              <div class="h5 secondary-text">{{fileDescription.fileInfo.name}}</div>
+              <div class="h1 font-weight-300">
+                {{ fileDescription.sourceType }}
+              </div>
+              <div class="h5 secondary-text">
+                {{ fileDescription.fileInfo.name }}
+              </div>
             </div>
           </div>
 
-          <div
-            class="p-16 pt-8"
-            fxLayout="row"
-            fxLayoutAlign="center end"
-          >
-          <div fxLayout="row" fxFlex="70"  fxLayoutAlign="center end">
-            <button  class="mat-primary mat-raised-button" (click)="confirmImportClick()">ยืนยัน การนำเข้าข้อมูล</button>
-          </div>
-          <div fxLayout="row" fxFlex="30"  fxLayoutAlign="center end">
-            <button  class="mat-warn mat-raised-button pl-5" (click)="cancelImportClick()">ลองใหม่</button>
-          </div>
-          
-          
+          <div class="p-16 pt-8" fxLayout="row" fxLayoutAlign="center end">
+            <div fxLayout="row" fxFlex="70" fxLayoutAlign="center end">
+              <button
+                class="mat-primary mat-raised-button"
+                (click)="confirmImportClick()"
+              >
+                ยืนยัน การนำเข้าข้อมูล
+              </button>
+            </div>
+            <div fxLayout="row" fxFlex="30" fxLayoutAlign="center end">
+              <button
+                class="mat-warn mat-raised-button pl-5"
+                (click)="cancelImportClick()"
+              >
+                ลองใหม่
+              </button>
+            </div>
           </div>
         </div>
       </div>
     </div>
-    <div
-      fxFlex="100"
-      fxFlex.gt-sm="70"
-      fxLayoutAlign="space-between start"
-    >
+    <div fxFlex="100" fxFlex.gt-sm="70" fxLayoutAlign="space-between start">
       <ngx-datatable
-      fxFlex="95"
+        fxFlex="95"
         class="material fullscreen pl-5"
         [rows]="records"
         [limit]="10"
@@ -44,7 +48,7 @@
         scrollbarH="true"
         [sorts]="[{ prop: 'customerName' }]"
       >
-        <ngx-datatable-column  name="No.">
+        <ngx-datatable-column name="No.">
           <ng-template let-row="row" ngx-datatable-cell-template>
             {{ row.no }}
           </ng-template>
@@ -90,25 +94,30 @@
 </div>
 <ng-template #noData>
   <div
-    class="fuse-card simple clickable"
+    class="fuse-card simple clickable dropzone"
     fxLayout="column"
     fxLayoutAlign="center center"
     fxFlex="100"
     (drop)="drop($event)"
     (dragover)="allowDrop($event)"
   >
-    <mat-icon
-      class="upload-icon"
-      fxLayout="column"
-      fxFlex="40"
-      fxLayoutAlign="start center"
-      >backup</mat-icon
-    >
-    <p fxLayoutAlign="start center">
-      คุณสามารถลากและปล่อยไฟล์ Excel ในนี้เพื่ออัพโหลด
-    </p>
-    <p fxLayoutAlign="start center">
-      หรือ คลิ๊กเพื่อเลือกไฟล์ Excel จากไดเรกทอรีของท่าน
-    </p>
+    <label fxLayout="column" for="file-input">
+      <p fxLayoutAlign="center center">
+        <mat-icon fxLayoutAlign="center center">backup</mat-icon>
+      </p>
+      <p fxLayoutAlign="center end">
+        คุณสามารถลากและปล่อยไฟล์ Excel ในนี้เพื่ออัพโหลด
+      </p>
+      <p fxLayoutAlign="center end">
+        หรือ คลิ๊กเพื่อเลือกไฟล์ Excel จากไดเรกทอรีของท่าน
+      </p>
+      <input
+        name="detectFiles"
+        id="file-input"
+        type="file"
+        (change)="detectFiles($event)"
+        accept=".csv,.xls,.xlsx"
+      />
+    </label>
   </div>
 </ng-template>
