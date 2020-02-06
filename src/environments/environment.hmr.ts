@@ -2,5 +2,5 @@ export const environment = {
     production: false,
     hmr       : true,
     appName : 'dropAcc-dev',
-    apiUrl : 'http://'
+    apiUrl : 'https://dropacc-sevice.lamunphan.com'
 };
