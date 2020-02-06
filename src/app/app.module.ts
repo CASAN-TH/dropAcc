@@ -24,16 +24,12 @@ const appRoutes: Routes = [
         loadChildren: './authentication/authentication.module#AuthenticationModule'
     },
     {
-        path        : 'sample',
-        loadChildren: './main/sample/sample.module#SampleModule'
-    },
-    {
         path        : 'sale',
         loadChildren: './main/sale/sale.module#SaleModule'
     },
     {
         path      : '**',
-        redirectTo: 'dashboard'
+        redirectTo: 'sale'
     }
 ];
 

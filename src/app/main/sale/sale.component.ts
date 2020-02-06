@@ -14,7 +14,8 @@ export class SaleComponent implements OnInit {
   fileType =
     "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
   records: any = [];
-  summary: any = [];
+  fileDescription:any = {};
+
   constructor(
     private _fuseTranslationLoaderService: FuseTranslationLoaderService,
     private saleService: SaleService
@@ -24,7 +25,7 @@ export class SaleComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  async drop(ev) {
+  drop(ev) {
     ev.preventDefault();
     const files = ev.dataTransfer.files;
     console.log(files);
@@ -32,21 +33,27 @@ export class SaleComponent implements OnInit {
     if (this.isValidCSVFile(files[0])) {
       this.saleService.csvReader(files[0]).then((data: any) => {
         // console.log(data);
+        this.fileDescription.sourceType = "Page365";
+        this.fileDescription.fileInfo = files[0];
         this.records = data;
-        this.summary = this.summaryData(data);
-        this.importData(data);
+        
       });
     } else if (this.isValidXLSXFile(files[0])) {
       this.saleService.xlsxReader(files[0]).then((data: any) => {
         // console.log(data);
+        this.fileDescription.sourceType = "Ocha";
+        this.fileDescription.fileInfo = files[0];
         this.records = data;
-        this.summary = this.summaryData(data);
-        this.importData(data);
+        
       });
     } else {
       alert("Please import valid .csv file.");
       this.fileReset();
     }
+  }
+
+  confirmImportClick(){
+    this.importData(this.records);
   }
 
   importData(data){
@@ -58,23 +65,8 @@ export class SaleComponent implements OnInit {
     }
   }
 
-  summaryData(data) {
-    var result = [];
-    data.reduce(function(res, value) {
-      if (!res[value.itemCode]) {
-        res[value.itemCode] = {
-          itemCode: value.itemCode,
-          itemName: value.itemName,
-          itemQty: 0,
-          itemSubtotal: 0
-        };
-        result.push(res[value.itemCode]);
-      }
-      res[value.itemCode].itemQty += parseInt(value.itemQty);
-      res[value.itemCode].itemSubtotal += parseInt(value.itemSubtotal);
-      return res;
-    }, {});
-    return result;
+  cancelImportClick(){
+    this.records=[];
   }
 
   allowDrop(ev) {

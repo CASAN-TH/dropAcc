@@ -5,6 +5,8 @@ import { TranslateModule } from '@ngx-translate/core';
 import { FuseSharedModule } from '@fuse/shared.module';
 import { AuthenGuardService } from 'app/authentication/authen-guard.service';
 import { MatIconModule, MatMenuModule } from '@angular/material';
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { FuseConfirmDialogModule } from '@fuse/components';
 
 const routes = [
   {
@@ -24,7 +26,11 @@ const routes = [
     MatIconModule,
     MatMenuModule,
 
-    FuseSharedModule
+    //Swimlane NgxDatatableModule
+    NgxDatatableModule,
+
+    FuseSharedModule,
+    FuseConfirmDialogModule
   ],
   exports: [
     SaleComponent

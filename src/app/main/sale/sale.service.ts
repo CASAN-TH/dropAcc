@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 
 import * as XLSX from "xlsx";
-import { environment } from 'environments/environment';
+import { environment } from "environments/environment";
 
 @Injectable({
   providedIn: "root"
@@ -23,7 +23,8 @@ export class SaleService {
         let headersRow = this.getHeaderArray(csvRecordsArray);
         records = this.getDataRecordsArrayFromCSVFile(
           csvRecordsArray,
-          headersRow
+          headersRow,
+          file
         );
         resolve(records);
       };
@@ -37,15 +38,16 @@ export class SaleService {
 
   private getDataRecordsArrayFromCSVFile(
     csvRecordsArray: any,
-    headersRow: any
+    headersRow: any,
+    file: any
   ) {
     let csvArr = [];
 
     for (let i = 1; i < csvRecordsArray.length; i++) {
       let curruntRecord = (<string>csvRecordsArray[i]).split("	");
       if (curruntRecord.length == headersRow.length) {
-        var csvRecord = {};
-        var idx = 0;
+        let csvRecord: any = {};
+        let idx = 0;
         headersRow.forEach(function(key) {
           csvRecord[
             key
@@ -56,6 +58,8 @@ export class SaleService {
           idx++;
         });
         // console.log(csvRecord);
+        csvRecord.sourceType = "Page365";
+        csvRecord.attFileName = file.name;
         csvArr.push(csvRecord);
       }
     }
@@ -99,7 +103,9 @@ export class SaleService {
               workbook.Sheets[workbook.SheetNames[0]]
             );
             // console.log(json);
-            let transDate = `${json[0]["__EMPTY_2"].split("-")[2]}-${json[0]["__EMPTY_2"].split("-")[1]}-${json[0]["__EMPTY_2"].split("-")[0]}`;
+            let transDate = `${json[0]["__EMPTY_2"].split("-")[2]}-${
+              json[0]["__EMPTY_2"].split("-")[1]
+            }-${json[0]["__EMPTY_2"].split("-")[0]}`;
             let posDebt = json[2]["__EMPTY_2"];
             for (let index = 0; index < json.length; index++) {
               const row = json[index];
@@ -146,13 +152,18 @@ export class SaleService {
                       paidAmount: item["ยอดขาย"],
                       note: "",
                       itemCode: `${prodName}${item["ชื่อสินค้า"]}`,
-                      variantName: item["ชื่อสินค้า"].replace(" - ",""),
-                      itemName: `${prodName}${item["ชื่อสินค้า"]}`.replace("- ราคาที่กำหนดเอง 1",""),
+                      variantName: item["ชื่อสินค้า"].replace(" - ", ""),
+                      itemName: `${prodName}${item["ชื่อสินค้า"]}`.replace(
+                        "- ราคาที่กำหนดเอง 1",
+                        ""
+                      ),
                       itemQty: item["จำนวน"],
                       itemPrice:
                         parseInt(item["ยอดขาย"]) / parseInt(item["จำนวน"]),
                       itemSubtotal: item["ยอดขาย"],
-                      itemNote: ""
+                      itemNote: "",
+                      sourceType: "Ocha",
+                      attFileName: file.name
                     });
                     idx++;
                   }
@@ -180,13 +191,13 @@ export class SaleService {
   }
 
   importData(data: any): Promise<any> {
-
     return new Promise((resolve, reject) => {
-      this.http.post(`${environment.apiUrl}/api/import/sales`, data).subscribe((res: any) => {
-        // console.log(res);
-        resolve(res.data);
-      }, reject);
+      this.http
+        .post(`${environment.apiUrl}/api/import/sales`, data)
+        .subscribe((res: any) => {
+          // console.log(res);
+          resolve(res.data);
+        }, reject);
     });
-
   }
 }

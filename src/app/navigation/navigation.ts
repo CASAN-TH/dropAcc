@@ -1,47 +1,47 @@
 import { FuseNavigation } from '@fuse/types';
 
 export const navigation: FuseNavigation[] = [
+    // {
+    //     id       : 'Dashboard',
+    //     title    : 'Dashboard',
+    //     translate: 'NAV.DASHBOARD',
+    //     type     : 'group',
+    //     children : [
+            
+    //     ]
+    // },
+    // {
+    //     id: 'HR',
+    //     title: 'HR',
+    //     translate: 'NAV.HR',
+    //     type: 'group',
+    //     children: [
+            
+    //     ]
+    // },
+    // {
+    //     id: 'CRM',
+    //     title: 'CRM',
+    //     translate: 'NAV.CRM',
+    //     type: 'group',
+    //     children: [
+            
+    //     ]
+    // },
     {
-        id       : 'systemsummary',
-        title    : 'System Summary',
-        translate: 'NAV.SYSTEMSUMMARY',
-        type     : 'group',
-        children : [
+        id: 'accounting',
+        title: 'Accounting',
+        translate: 'NAV.ACCOUNTING',
+        type: 'group',
+        children: [
             {
-                id       : 'dashboard',
-                title    : 'Dashboard',
-                translate: 'NAV.DASHBOARD.TITLE',
+                id       : 'dashboad-accounting',
+                title    : 'Dashboard Accounting',
+                translate: 'นำเข้าข้อมูลการขาย',
                 type     : 'item',
-                icon     : 'email',
-                url      : '/dashboard',
-                badge    : {
-                    title    : '25',
-                    translate: 'NAV.DASHBOARD.BADGE',
-                    bg       : '#F44336',
-                    fg       : '#FFFFFF'
-                }
-            }
-        ]
-    },
-    {
-        id       : 'dailytask',
-        title    : 'Daily',
-        translate: 'NAV.DAILY',
-        type     : 'group',
-        children : [
-            {
-                id       : 'sale',
-                title    : 'Sale',
-                translate: 'NAV.SALE.TITLE',
-                type     : 'item',
-                icon     : 'email',
+                icon     : 'cloud_download',
                 url      : '/sale',
-                badge    : {
-                    title    : '25',
-                    translate: 'NAV.SALE.BADGE',
-                    bg       : '#F44336',
-                    fg       : '#FFFFFF'
-                }
+                
             }
         ]
     }
