@@ -34,13 +34,22 @@ export const navigation: FuseNavigation[] = [
         translate: 'NAV.ACCOUNTING',
         type: 'group',
         children: [
+            // {
+            //     id       : 'dashboad-accounting',
+            //     title    : 'Dashboard Accounting',
+            //     translate: 'นำเข้าข้อมูลการขาย',
+            //     type     : 'item',
+            //     icon     : 'cloud_download',
+            //     url      : '/sale',
+                
+            // },
             {
-                id       : 'dashboad-accounting',
-                title    : 'Dashboard Accounting',
-                translate: 'นำเข้าข้อมูลการขาย',
+                id       : 'ocha-interface',
+                title    : 'Ocha Interface',
+                translate: 'นำเข้ามูลจาก Ocha',
                 type     : 'item',
                 icon     : 'cloud_download',
-                url      : '/sale',
+                url      : '/ocha',
                 
             }
         ]

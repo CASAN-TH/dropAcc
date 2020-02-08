@@ -28,8 +28,12 @@ const appRoutes: Routes = [
         loadChildren: './main/sale/sale.module#SaleModule'
     },
     {
+        path        : 'ocha',
+        loadChildren: './main/ochaInterface/ochainterface.module#OchainterfaceModule'
+    },
+    {
         path      : '**',
-        redirectTo: 'sale'
+        redirectTo: 'ocha'
     }
 ];
 

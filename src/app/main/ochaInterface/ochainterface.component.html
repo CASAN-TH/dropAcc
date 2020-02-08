@@ -1,0 +1,82 @@
+<div class="page-layout blank p-24" fusePerfectScrollbar>
+  <div fxLayout="column">
+    <div fxLayout="column" class="light-blue-600" fxLayoutAlign="center center" fxFlex="100">
+      <div class="p-16" fxLayout="row" fxLayoutAlign="space-between center">
+        <div class="pr-16">
+          <div class="h1 font-weight-300">
+           Ocha POS
+          </div>
+          <div class="h5 secondary-text">
+            ระบุวันที่เริ่มต้น
+          </div>
+          <div class="h5 secondary-text">
+            ระบุวันที่สิ้นสุด
+          </div>
+        </div>
+      </div>
+      <div  fxLayoutAlign="center center" fxFlex="100">
+        <div class="p-16 pt-8" fxLayout="row" fxLayoutAlign="center end">
+          <div fxLayout="row" fxFlex="70" fxLayoutAlign="center end">
+            <button
+              class="mat-primary mat-raised-button"
+              (click)="confirmImportClick()"
+            >
+              ยืนยัน การนำเข้าข้อมูล
+            </button>
+          </div>
+          <div fxLayout="row" fxFlex="30" fxLayoutAlign="center end">
+            <button
+              class="mat-warn mat-raised-button pl-5"
+              (click)="cancelImportClick()"
+            >
+              ลองใหม่
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div fxLayout="column" fxFlex="100">
+      <mat-tab-group>
+        <mat-tab [label]="shop.shopName" *ngFor="let shop of shop_orders">
+          <ngx-datatable
+            fxFlex="100"
+            class="material fullscreen"
+            [rows]="shop.orders"
+            [limit]="5"
+            [columnMode]="'force'"
+            [headerHeight]="50"
+            [footerHeight]="50"
+            [rowHeight]="50"
+            scrollbarH="true"
+          >
+            <ngx-datatable-column name="No.">
+              <ng-template let-row="row" ngx-datatable-cell-template>
+                {{ row.no }}
+              </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column name="Status">
+              <ng-template let-row="row" ngx-datatable-cell-template>
+                {{ row.status }}
+              </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column name="Customer Name">
+              <ng-template let-row="row" ngx-datatable-cell-template>
+                {{ row.customerName || "ลูกค้าหน้าร้าน" }}
+              </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column name="Payment Provider">
+              <ng-template let-row="row" ngx-datatable-cell-template>
+                {{ row.paymentProvider }}
+              </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column name="Total">
+              <ng-template let-row="row" ngx-datatable-cell-template>
+                {{ row.paidAmount | number }}
+              </ng-template>
+            </ngx-datatable-column>
+          </ngx-datatable>
+        </mat-tab>
+      </mat-tab-group>
+    </div>
+  </div>
+</div>
