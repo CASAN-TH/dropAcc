@@ -77,4 +77,9 @@ export class OchainterfaceComponent implements OnInit {
       });
     }
   }
+
+  async cancelImportClick(){
+    this.shop_orders = [];
+    await this.getData();
+  }
 }
