@@ -26,15 +26,25 @@ export class OchainterfaceComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
-    await this.getData();
+    const res = await this.getData();
+    if (res.error) {
+      console.log(res.error);
+      return;
+    }
+    this.shop_orders = res.data;
   }
 
   async getData() {
-    this.ocha.getShopList().then(async (shops: Array<any>) => {
+    try {
+      let orders: Array<any> = [];
+      // 1. อ่านข้อมูลหน้าร้านทั้งหมดจาก ocha owner account
+      const shops: Array<any> = await this.ocha.getShopList();
       for (var i = 0; i < shops.length; i++) {
         let shop = shops[i];
+        // 2. Auth เข้าทีละร้านเพื่ออ่าน  Set-Cookie ใน Response Header
         let cookie = await this.ocha.getSetCookieByShop(shops[i].shop_id);
-        // console.log(cookie.posocha);
+
+        // 3. อ่านข้อมูล Orders แต่ละร้านค้าจาก cookies param
         let payload = {
           posocha: cookie.posocha,
           filter: { start_time: this.start_time, end_time: this.end_time },
@@ -44,42 +54,58 @@ export class OchainterfaceComponent implements OnInit {
             page_begin: null
           }
         };
-        // console.log(payload);
-
         let res = await this.ocha.getShopOrderByDate(payload);
+
+        // 4. ปั้นข้อมูลของแต่ละร้าน เพื่อแสดงผล และนำไป importData
         let order = {
           shopId: shop.shop_id,
           shopName: shop.profile.shop_name,
           orders: res
         };
 
-        this.shop_orders.push(order);
-        console.log(JSON.stringify(this.shop_orders));
+        orders.push(order);
       }
-    });
-  }
-
-  confirmImportClick() {
-    let orders : Array<any> = [];
-    this.shop_orders.forEach(shop => {
-      // this.saleService.importData(shop);
-      shop.orders.forEach(order => {
-        order.shopId = shop.shopId;
-        order.shopName = shop.shopName;
-        orders.push(order)
-      });
-    });
-    console.log(JSON.stringify(orders));
-    while (orders.length) {
-      const payLoad = orders.splice(0, 50);
-      this.saleService.importData(payLoad).then((res: any) => {
-        console.log(res);
-      });
+      return { error: null, data: orders };
+    } catch (error) {
+      // throw new Error(error.message);
+      return { error: error.message };
     }
   }
 
-  async cancelImportClick(){
+  async importData() {
+    try {
+      let orders: Array<any> = [];
+      let results = 0;
+      this.shop_orders.forEach(shop => {
+        shop.orders.forEach(order => {
+          order.shopId = shop.shopId;
+          order.shopName = shop.shopName;
+          orders.push(order);
+        });
+      });
+
+      while (orders.length) {
+        const payLoad = orders.splice(0, 50);
+        const res: Array<any> = await this.saleService.importData(payLoad);
+        results += res.length;
+      }
+      return { error: null, data: results };
+    } catch (error) {
+      return { error: error.message };
+    }
+  }
+
+  async confirmImportClick() {
+    const res = await this.importData();
+    if (res.error) {
+      console.log(res.error);
+      return;
+    }
+    alert("Import successfully :" + res.data);
+  }
+
+  async cancelImportClick() {
     this.shop_orders = [];
-    await this.getData();
+    const res = await this.getData();
   }
 }
